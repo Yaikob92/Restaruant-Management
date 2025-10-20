@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 )
+
 var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "food")
 
 func main() {

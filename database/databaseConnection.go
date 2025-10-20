@@ -10,20 +10,20 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func DBinstance() *mongo.Client{
+func DBinstance() *mongo.Client {
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
-	
-	ctx,cancel := context.WithTimeout(context.Background(),10*time.Second)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	// conneting to mongodb
-	client,err := mongo.Connect(ctx,clientOptions)
-	if err != nil{
+	client, err := mongo.Connect(ctx, clientOptions)
+	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = client.Ping(ctx,nil)
-	if err != nil{
+	err = client.Ping(ctx, nil)
+	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Connected to mongodb")
@@ -32,4 +32,7 @@ func DBinstance() *mongo.Client{
 
 var Client *mongo.Client = DBinstance()
 
-func OpenCollection()
+func OpenCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+	var collection *mongo.Collection = client.Database("restaurant").Collection(collectionName)
+	return collection
+}
